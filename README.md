@@ -1,2 +1,2 @@
 # hackbio
-HackBio AI Internship 2025
+Hackbio 2025 biocoding internship
