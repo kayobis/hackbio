@@ -1,0 +1,31 @@
+#Biodata of Serine Team
+> biodata <- data.frame(name= c("Olukayode", "Ifeoluwa", "Hidaayah", "Oluwafemi"), 
+                        slack_username = c("kayobis", "ife", "Hidaayah","Oluwafemi"),
+                        email = c("obisanya001@gmail.com", "oreoluwaesan@gmail.com", "hidaayah01@gmail.com","agosileoluwafemi@gmail.com"), 
+                        hobby = c("listening to music", NA, "Movies & Travelling", NA), 
+                        country = c("Nigeria", "Nigeria","Nigeria", "Nigeria"), 
+                        discipline = c("Molecular Biology", "Biotech & Bioinformatics", "Neuroscience", NA), 
+                        prog_lang = c("R", "R", "Python", "Python"))
+> print(biodata)
+
+#Output
+ name slack_username
+1 Olukayode        kayobis
+2  Ifeoluwa            ife
+3  Hidaayah       Hidaayah
+4 Oluwafemi      Oluwafemi
+                       email
+1      obisanya001@gmail.com
+2     oreoluwaesan@gmail.com
+3       hidaayah01@gmail.com
+4 agosileoluwafemi@gmail.com
+                hobby country
+1  listening to music Nigeria
+2                <NA> Nigeria
+3 Movies & Travelling Nigeria
+4                <NA> Nigeria
+                discipline prog_lang
+1        Molecular Biology         R
+2 Biotech & Bioinformatics         R
+3             Neuroscience    Python
+4                     <NA>    Python
