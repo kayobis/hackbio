@@ -9,21 +9,11 @@
 > print(biodata)
 
 #Output
- name slack_username
-1 Olukayode        kayobis
-2  Ifeoluwa            ife
-3  Hidaayah       Hidaayah
-4 Oluwafemi      Oluwafemi
-                       email
-1      obisanya001@gmail.com
-2     oreoluwaesan@gmail.com
-3       hidaayah01@gmail.com
-4 agosileoluwafemi@gmail.com
-                hobby country
-1  listening to music Nigeria
-2                <NA> Nigeria
-3 Movies & Travelling Nigeria
-4                <NA> Nigeria
+       name slack_username                      email               hobby country
+1 Olukayode        kayobis      obisanya001@gmail.com  listening to music Nigeria
+2  Ifeoluwa            ife     oreoluwaesan@gmail.com                <NA> Nigeria
+3  Hidaayah       Hidaayah       hidaayah01@gmail.com Movies & Travelling Nigeria
+4 Oluwafemi      Oluwafemi agosileoluwafemi@gmail.com                <NA> Nigeria
                 discipline prog_lang
 1        Molecular Biology         R
 2 Biotech & Bioinformatics         R
