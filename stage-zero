@@ -1,21 +1,23 @@
 #Biodata of Serine Team
-> biodata <- data.frame(name= c("Olukayode", "Ifeoluwa", "Hidaayah", "Oluwafemi"), 
-                        slack_username = c("kayobis", "ife", "Hidaayah","Oluwafemi"),
-                        email = c("obisanya001@gmail.com", "oreoluwaesan@gmail.com", "hidaayah01@gmail.com","agosileoluwafemi@gmail.com"), 
-                        hobby = c("listening to music", NA, "Movies & Travelling", NA), 
-                        country = c("Nigeria", "Nigeria","Nigeria", "Nigeria"), 
-                        discipline = c("Molecular Biology", "Biotech & Bioinformatics", "Neuroscience", NA), 
-                        prog_lang = c("R", "R", "Python", "Python"))
+> biodata <- data.frame(name= c("Olukayode", "Ifeoluwa", "Hidaayah", "Oluwafemi", "Aderinsola"),
+                        slack_username = c("kayobis", "Ife", "Hidaayah","Oluwafemi", "Aderinsola"),
+                        email = c("obisanya001@gmail.com", "oreoluwaesan@gmail.com", "hidaayah01@gmail.com","agosileoluwafemi@gmail.com", "adebisiaderinsola@gmail.com"), 
+                        hobby = c("Music","Music","Movies & Travelling", "Reading", "Fashion"), 
+                        country = c("Nigeria", "UK","Nigeria", "Nigeria", "Nigeria"), 
+                        discipline = c("Molecular Biology", "Biotech & Bioinformatics", "Neuroscience", "Biochemistry", "Biochemistry"), 
+                        prog_lang = c("R", "R", "Python", "Python", "Python"))
 > print(biodata)
 
 #Output
-       name slack_username                      email               hobby country
-1 Olukayode        kayobis      obisanya001@gmail.com  listening to music Nigeria
-2  Ifeoluwa            ife     oreoluwaesan@gmail.com                <NA> Nigeria
-3  Hidaayah       Hidaayah       hidaayah01@gmail.com Movies & Travelling Nigeria
-4 Oluwafemi      Oluwafemi agosileoluwafemi@gmail.com                <NA> Nigeria
+      name slack_username                       email               hobby country
+1  Olukayode        kayobis       obisanya001@gmail.com               Music Nigeria
+2   Ifeoluwa            Ife      oreoluwaesan@gmail.com               Music      UK
+3   Hidaayah       Hidaayah        hidaayah01@gmail.com Movies & Travelling Nigeria
+4  Oluwafemi      Oluwafemi  agosileoluwafemi@gmail.com             Reading Nigeria
+5 Aderinsola     Aderinsola adebisiaderinsola@gmail.com             Fashion Nigeria
                 discipline prog_lang
 1        Molecular Biology         R
 2 Biotech & Bioinformatics         R
 3             Neuroscience    Python
-4                     <NA>    Python
+4             Biochemistry    Python
+5             Biochemistry    Python
