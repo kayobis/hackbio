@@ -1,0 +1,90 @@
+#Solution 1
+#Function for Translating DNA to Protein
+#Define the genetic code
+codon_db <- c( "ATG" = "M", # Start Codon "TAA" = "*", # Stop Codon "TAG" = "*", # Stop Codon
+  "TGA" = "*", # Stop Codon "TTT" = "F", "TTC" = "F",  # Phenylalanine
+  "TTA" = "L", "TTG" = "L",  # Leucine  "CTT" = "L", "CTC" = "L", "CTA" = "L", "CTG" = "L",  # Leucine
+  "ATT" = "I", "ATC" = "I", "ATA" = "I",  # Isoleucine  "GTT" = "V", "GTC" = "V", "GTA" = "V", "GTG" = "V"  # Valine)
+
+#Create a function to translate DNA to protein
+translator <- function(inputCodon){
+  #Split the DNA seq into codons
+  split_seq <- strsplit(inputCodon, "")[[1]]
+  codon_positions <- seq(1, length(split_seq), 3)
+  
+  ribosome_output <- c()
+  
+  for(i in codon_positions){
+    curr_nuc <- split_seq[i:(i+2)]
+    curr_nuc <- paste0(curr_nuc[1], curr_nuc[2], curr_nuc[3])
+    #Look up the codon in the genetic code
+    ribosome_output <- c(ribosome_output, codon_db[curr_nuc])
+  }
+ return(ribosome_output)
+}
+
+# Test the function
+test_cd <- "ATGTTTCTATAA"
+translator(test_cd)
+
+#Output
+ATG TTT CTA TAA 
+"M" "F" "L" "*" 
+
+
+
+
+#Solution 2
+# Function to simulate logistic growth
+population_maker <- function(k=2, x_mid=5, x){
+  soln <- 1/(1 + exp(-k*(x - x_mid)))
+  return(soln)
+}
+
+od_600 <- c()
+for(i in 0:24){
+  curr_od <- population_maker(k=0.25, x_mid=10, x=i)
+  od_600 <- c(od_600, curr_od)
+}
+
+plot(x=0:24, y=od_600, type = "l", main = "Logistic Curve", ylab = "OD", 
+     xlab = "Time(hrs)", col="red", lwd="4" )
+
+
+
+
+#Solution 3
+#Function to calculate time to reach 80% carrying capacity
+time80 <- function(k=0.25, x_mid=10){
+  time_to_target <- (x_mid - log(0.25)/k)
+  return(time_to_target)
+} 
+ 
+#Calculate the result directly
+result <- time80()
+print(paste("Time to reach 80% of  carry capacity:", result))
+
+#Output
+[1] "Time to reach 80% of  carry capacity: 15.5451774444796"
+
+
+
+
+#Solution 4
+#Function to calculate Hamming distance
+ham_dist <- function(slack_id,x_id){
+  #Convert strings to character vectors
+  slack_chars <- strsplit(slack_id, " ")[[1]]
+  x_chars <- strsplit(x_id, " ")[[1]]
+  
+  #Count differences
+  sum(slack_chars != x_chars)
+}
+
+slack_id <- "kayobis"
+x_id <- "kayobis"
+
+print(paste("Hamming distance:", ham_dist(slack_id,x_id)))
+
+#Output
+[1] "Hamming distance: 0"
