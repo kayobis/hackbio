@@ -1,0 +1,159 @@
+> #Task 2.7 on Public Health
+> #Load the Dataset
+> data_nhanes <- read.csv("nhanes_hackbio.csv", header = TRUE)
+> head(nhanes_hackbio)
+# A tibble: 6 × 32
+     id Gender   Age Race  Education  MaritalStatus RelationshipStatus Insured Income Poverty HomeRooms HomeOwn Work  Weight Height   BMI Pulse BPSys
+  <dbl> <chr>  <dbl> <chr> <chr>      <chr>         <chr>              <chr>    <dbl>   <dbl>     <dbl> <chr>   <chr>  <dbl>  <dbl> <dbl> <dbl> <dbl>
+1 62163 male      14 Asian NA         NA            NA                 Yes     100000    4.07         6 Rent    NA      49.4   169.  17.3    72   107
+2 62172 female    43 Black High Scho… NeverMarried  Single             Yes      22500    2.02         4 Rent    NotW…   98.6   172   33.3    80   103
+3 62174 male      80 White College G… Married       Committed          Yes      70000    4.3          7 Own     NotW…   95.8   168.  33.9    56    97
+4 62174 male      80 White College G… Married       Committed          Yes      70000    4.3          7 Own     NotW…   95.8   168.  33.9    56    97
+5 62175 male       5 White NA         NA            NA                 Yes      12500    0.39         7 Rent    NA      23.9   120.  16.7    NA    NA
+6 62176 female    34 White College G… Married       Committed          Yes     100000    5            8 Own     NotW…   68.7   172.  23.3    92   107
+# ℹ 14 more variables: BPDia <dbl>, Testosterone <dbl>, HDLChol <dbl>, TotChol <dbl>, Diabetes <chr>, DiabetesAge <dbl>, nPregnancies <dbl>,
+#   nBabies <dbl>, SleepHrsNight <dbl>, PhysActive <chr>, PhysActiveDays <dbl>, AlcoholDay <dbl>, AlcoholYear <dbl>, SmokingStatus <chr>
+> summary(data_nhanes)
+       id           Gender               Age            Race            Education         MaritalStatus      RelationshipStatus   Insured         
+ Min.   :62163   Length:5000        Min.   : 0.00   Length:5000        Length:5000        Length:5000        Length:5000        Length:5000       
+ 1st Qu.:64544   Class :character   1st Qu.:17.00   Class :character   Class :character   Class :character   Class :character   Class :character  
+ Median :67039   Mode  :character   Median :36.00   Mode  :character   Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+ Mean   :67028                      Mean   :36.71                                                                                                 
+ 3rd Qu.:69509                      3rd Qu.:54.00                                                                                                 
+ Max.   :71915                      Max.   :80.00                                                                                                 
+                                                                                                                                                  
+     Income          Poverty        HomeRooms        HomeOwn              Work               Weight           Height           BMI       
+ Min.   :  2500   Min.   :0.000   Min.   : 1.000   Length:5000        Length:5000        Min.   :  3.60   Min.   : 83.8   Min.   :12.90  
+ 1st Qu.: 30000   1st Qu.:1.190   1st Qu.: 4.000   Class :character   Class :character   1st Qu.: 55.40   1st Qu.:156.5   1st Qu.:21.50  
+ Median : 50000   Median :2.600   Median : 6.000   Mode  :character   Mode  :character   Median : 72.10   Median :165.6   Median :25.80  
+ Mean   : 57078   Mean   :2.761   Mean   : 6.193                                         Mean   : 70.33   Mean   :161.5   Mean   :26.44  
+ 3rd Qu.:100000   3rd Qu.:4.760   3rd Qu.: 8.000                                         3rd Qu.: 88.10   3rd Qu.:174.2   3rd Qu.:30.60  
+ Max.   :100000   Max.   :5.000   Max.   :13.000                                         Max.   :198.70   Max.   :200.4   Max.   :80.60  
+ NA's   :377      NA's   :325     NA's   :28                                             NA's   :31       NA's   :159     NA's   :166    
+     Pulse            BPSys           BPDia        Testosterone        HDLChol         TotChol         Diabetes          DiabetesAge   
+ Min.   : 40.00   Min.   : 79.0   Min.   :  0.0   Min.   :   0.25   Min.   :0.410   Min.   : 1.530   Length:5000        Min.   : 1.00  
+ 1st Qu.: 66.00   1st Qu.:107.0   1st Qu.: 62.0   1st Qu.:  17.70   1st Qu.:1.090   1st Qu.: 4.060   Class :character   1st Qu.:39.00  
+ Median : 72.00   Median :116.0   Median : 69.0   Median :  43.82   Median :1.290   Median : 4.730   Mode  :character   Median :50.00  
+ Mean   : 73.63   Mean   :118.7   Mean   : 68.3   Mean   : 197.90   Mean   :1.361   Mean   : 4.831                      Mean   :47.61  
+ 3rd Qu.: 82.00   3rd Qu.:128.0   3rd Qu.: 77.0   3rd Qu.: 362.41   3rd Qu.:1.580   3rd Qu.: 5.510                      3rd Qu.:57.00  
+ Max.   :136.00   Max.   :221.0   Max.   :116.0   Max.   :1795.60   Max.   :4.030   Max.   :12.280                      Max.   :80.00  
+ NA's   :718      NA's   :719     NA's   :719     NA's   :874       NA's   :775     NA's   :775                         NA's   :4693   
+  nPregnancies       nBabies       SleepHrsNight     PhysActive        PhysActiveDays    AlcoholDay      AlcoholYear     SmokingStatus     
+ Min.   : 1.000   Min.   : 0.000   Min.   : 2.000   Length:5000        Min.   :1.000   Min.   : 1.000   Min.   :  0.00   Length:5000       
+ 1st Qu.: 2.000   1st Qu.: 2.000   1st Qu.: 6.000   Class :character   1st Qu.:2.000   1st Qu.: 1.000   1st Qu.:  3.00   Class :character  
+ Median : 3.000   Median : 2.000   Median : 7.000   Mode  :character   Median :4.000   Median : 2.000   Median : 24.00   Mode  :character  
+ Mean   : 2.924   Mean   : 2.375   Mean   : 6.906                      Mean   :3.819   Mean   : 2.925   Mean   : 74.86                     
+ 3rd Qu.: 4.000   3rd Qu.: 3.000   3rd Qu.: 8.000                      3rd Qu.:5.000   3rd Qu.: 3.000   3rd Qu.:104.00                     
+ Max.   :13.000   Max.   :11.000   Max.   :12.000                      Max.   :7.000   Max.   :82.000   Max.   :364.00                     
+ NA's   :3735     NA's   :3832     NA's   :1166                        NA's   :2614    NA's   :2503     NA's   :2016                       
+> #Handle Missing Values(NA)
+> #Remove rows with missing values
+> data_cleaned <- na.omit(data_nhanes)
+> #Replace NA with O
+> data_nhanes[is.na(data_nhanes)] <- 0
+> #Visualize BMI, Weight, Weight in Pounds, and Age with Histograms
+> #Create Weight in Pounds column
+> data_nhanes$Weight_pounds <- data_nhanes$Weight * 2.2
+> #Histogram for BMI
+> hist(data_nhanes$BMI, main = "BMI Distribution", xlab = "BMI",
++      col = "lightblue")
+> #Histogram for Weight
+> hist(data_nhanes$Weight, main = "Weight Distribution", xlab="Weight(kg)",
++      col="lightgreen")
+> #Histogram for Weight in Pounds
+> hist(data_nhanes$Weight_pounds,main = "Weight in Pounds Distribution",
++      xlab = "Weight(lbs)", col = "orange")
+> #Histogram for Age
+> hist(data_nhanes$Age, main = "Age Distribution", xlab = "Age", col="purple")
+> #Mean 60-second pulse rate
+> mean_pulse <- mean(data_nhanes$Pulse)
+> mean_pulse
+[1] 63.06
+> #Range of Diastolic Blood Pressure
+> #Min and Max of Diastolic Blood Pressure
+> min_bp <- min(data_nhanes$BPDia)
+> min_bp
+[1] 0
+> max_bp <- max(data_nhanes$BPDia)
+> max_bp
+[1] 116
+> #Variance of income
+> income_var <- var(data_nhanes$Income)
+> print(paste("Variance of Income:",income_var))
+[1] "Variance of Income: 1264147753.55071"
+> #Standard Deviation of Incomee
+> income_sd <- sd(data_nhanes$Income)
+> print(paste("Standard Deviation of Income:",income_sd))
+[1] "Standard Deviation of Income: 35554.855555194"
+> #Scatter Plot for Weight vs Height Colored by Gender, Diabetes, and Smoking Status
+> #Gender-based color
+> plot(data_nhanes$Height, data_nhanes$Weight, 
++      col=ifelse(data_nhanes$Gender == "male", "blue", "pink"),
++      main = "Weight vs Height by Gender", xlab = "Height", ylab="Weight",
++      pch=20)
+> legend("topright", legend = c("Male", "Female"), col=c("blue", "pink"), pch=20)
+> #Diabetes-based color
+> plot(data_nhanes$Height, data_nhanes$Weight,
++      col=ifelse(data_nhanes$Diabetes == "Yes", "red", "green"),
++      main="Weight vs Height by Diabetes Status", xlab = "Height", ylab = "Weight",
++      pch=20)
+> legend("topright", legend = c("Diabetes", "No Diabetes"), col=c("red", "green"), pch=20)
+> #Smoking Status
+> plot(data_nhanes$Height, data_nhanes$Weight,
++      col=ifelse(data_nhanes$SmokingStatus == "Current", "gold", "purple"),
++      main = "Weight vs Height by Smoking Status", xlab = "Height", ylab = "Weight",
++      pch=20)
+> legend("topright",legend = c("Smokers", "Non-Smokers"), col=c("gold", "purple"), pch=20)
+> #T-tests
+> #Age vs Gender
+> t.test(data_nhanes$Age ~ data_nhanes$Gender)
+
+	Welch Two Sample t-test
+
+data:  data_nhanes$Age by data_nhanes$Gender
+t = 1.7498, df = 4992.5, p-value = 0.08022
+alternative hypothesis: true difference in means between group female and group male is not equal to 0
+95 percent confidence interval:
+ -0.1344235  2.3672964
+sample estimates:
+mean in group female   mean in group male 
+            37.26733             36.15090 
+
+> #BMI vs Diabetes
+> t.test(data_nhanes$BMI ~ data_nhanes$Diabetes)
+Error in t.test.formula(data_nhanes$BMI ~ data_nhanes$Diabetes) : 
+  grouping factor must have exactly 2 levels
+> unique(data_nhanes$Diabetes)
+[1] "No"  "Yes" "0"  
+> #[1] "No"  "Yes" "0" 
+> #Filter Out Missing or Irrelevant Values
+> data_nhanes <- data_nhanes[data_nhanes$Diabetes %in% c("Yes", "No"),]
+> t.test(data_nhanes$BMI ~ data_nhanes$Diabetes)
+
+	Welch Two Sample t-test
+
+data:  data_nhanes$BMI by data_nhanes$Diabetes
+t = -13.912, df = 422.66, p-value < 2.2e-16
+alternative hypothesis: true difference in means between group No and group Yes is not equal to 0
+95 percent confidence interval:
+ -7.454314 -5.608686
+sample estimates:
+ mean in group No mean in group Yes 
+         25.39075          31.92225 
+
+> #Alcohol Year vs Relationship Status
+> unique(data_nhanes$RelationshipStatus)
+[1] "0"         "Single"    "Committed"
+> data_nhanes <- data_nhanes[data_nhanes$RelationshipStatus %in% c("Single", "Committed"),]
+> t.test(data_nhanes$AlcoholYear ~ data_nhanes$RelationshipStatus)
+
+	Welch Two Sample t-test
+
+data:  data_nhanes$AlcoholYear by data_nhanes$RelationshipStatus
+t = 5.533, df = 3379.1, p-value = 3.388e-08
+alternative hypothesis: true difference in means between group Committed and group Single is not equal to 0
+95 percent confidence interval:
+ 11.35129 23.81164
+sample estimates:
+mean in group Committed    mean in group Single 
+               68.10548                50.52401 
