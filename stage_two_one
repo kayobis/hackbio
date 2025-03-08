@@ -1,0 +1,66 @@
+> #Task 2.1 Microbiology
+> mic_data <- read.table("hackbiomcgc.tsv", header = TRUE)
+> head(mic_data)
+  time    A1    A2    A3    A4    A5    A6    A7    A8    A9   A10   A11   A12    B1    B2    B3    B4    B5    B6    B7    B8    B9   B10   B11
+1    0 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002
+2   15 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002
+3   30 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002
+4   45 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002
+5   60 0.003 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.003 0.003 0.002 0.002 0.002 0.003 0.003 0.002 0.002 0.002 0.002 0.002 0.003
+6   75 0.003 0.002 0.003 0.002 0.002 0.003 0.002 0.003 0.003 0.003 0.003 0.003 0.002 0.003 0.002 0.003 0.003 0.003 0.002 0.003 0.003 0.003 0.003
+    B12    C1    C2    C3    C4    C5    C6    C7    C8    C9   C10   C11   C12
+1 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002
+2 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002
+3 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002
+4 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002
+5 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002 0.002
+6 0.003 0.002 0.002 0.003 0.002 0.002 0.002 0.002 0.003 0.002 0.002 0.003 0.003
+> #Plot Growth Curves
+> plot(mic_data$time, mic_data$A1, type="l", col="red", ylim=c(0, max(mic_data[,-1])),
++      xlab = "Time (minutes)", ylab = "OD600", main = "Growth Curves")
+> #Overlay other strains
+> for(i in 2:ncol(mic_data)){
++   lines(mic_data$time, mic_data[,i], col=sample(colors(), 1))
++ }
+> legend("topleft", legend = colnames(mic_data)[2:6], col = 1:5, lty = 1)
+> #Determine the time to reach Carrying capacity i.e. the mximum OD600
+> #Function to  calculate carrying capacity time
+> carrying_capacity_time <- function(values, time) {
++   max_value <- max(values, na.rm = TRUE)  # Get maximum OD600
++   index <- which(values == max_value)[1]  # Find first occurrence of max OD600
++   return(time[index])  # Return the corresponding time
++ }
+> #Calculate carrying capacity time for each strain
+> carrying_times <- sapply(2:ncol(mic_data), function(i) carrying_capacity_time(mic_data[,i], mic_data$time))
+> names(carrying_times) <- colnames(mic_data)[2:ncol(mic_data)]
+> #Print carrying times
+> print(carrying_times)  # Display results
+  A1   A2   A3   A4   A5   A6   A7   A8   A9  A10  A11  A12   B1   B2   B3   B4   B5   B6   B7   B8   B9  B10  B11  B12   C1   C2   C3   C4   C5 
+1035 1440 1320 1440 1425 1320 1425 1305 1320 1320 1050 1035 1440 1440 1440 1020 1035 1440 1440 1170 1440 1320 1035 1335 1440 1410 1170 1440 1440 
+  C6   C7   C8   C9  C10  C11  C12 
+1440 1440 1170 1440 1440 1335 1170 
+> #Scatter Plot of Carrying Capacity Times
+> #Knock-out vs Knock-in scatter plot
+> plot(carrying_times[1:6], carrying_times[7:12],
++      xlab = "Knock-out Time", ylab = "Knock-in Time",
++      main = "Time to Carrying Capacity", col="blue", pch = 16)
+> abline(a=0, b=1, col="red") #Line of equality
+> #Box plot comparison
+> boxplot(carrying_times[1:6], carrying_times[7:12],
++         names = c("Knock-out", "Knock-in"),
++         col = c("orange", "green"),
++         main = "TIme to Reach Carrying Capacity")
+> #t-test between Knock-out and Knock-in times
+> t_test_result <- t.test(carrying_times[1:6], carrying_times[7:12])
+> print(t_test_result)
+
+	Welch Two Sample t-test
+
+data:  carrying_times[1:6] and carrying_times[7:12]
+t = 0.95892, df = 9.9874, p-value = 0.3602
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -115.8487  290.8487
+sample estimates:
+mean of x mean of y 
+   1330.0    1242.5 
