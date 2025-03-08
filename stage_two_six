@@ -1,0 +1,73 @@
+> #Task 2.6 - RNASeq
+> #Read the dataset
+> url <- "https://gist.githubusercontent.com/stephenturner/806e31fce55a8b7175af/raw/1a507c4c3f9f1baaa3a69187223ff3d3050628d4/results.txt"
+> data <- read.table(url, header = TRUE, sep="", stringsAsFactors = FALSE)
+> #Check the first few rows and structure of the data
+> head(data)
+     Gene log2FoldChange    pvalue      padj
+1    DOK6         0.5100 1.861e-08 0.0003053
+2    TBX5        -2.1290 5.655e-08 0.0004191
+3 SLC32A1         0.9003 7.664e-08 0.0004191
+4  IFITM1        -1.6870 3.735e-06 0.0068090
+5   NUP93         0.3659 3.373e-06 0.0068090
+6 EMILIN2         1.5340 2.976e-06 0.0068090
+> str(data)
+'data.frame':	16406 obs. of  4 variables:
+ $ Gene          : chr  "DOK6" "TBX5" "SLC32A1" "IFITM1" ...
+ $ log2FoldChange: num  0.51 -2.129 0.9 -1.687 0.366 ...
+ $ pvalue        : num  1.86e-08 5.66e-08 7.66e-08 3.73e-06 3.37e-06 ...
+ $ padj          : num  0.000305 0.000419 0.000419 0.006809 0.006809 ...
+> colnames(data)
+[1] "Gene"           "log2FoldChange" "pvalue"         "padj"          
+> #Create a volcano plot
+> plot(data$log2FoldChange, -log10(data$pvalue),
++      xlab = "Log2 Fold Change",
++      ylab = "-Log10(p-value)",
++      main = "Volcano Plot",
++      pch = 20,
++      col = ifelse(data$log2FoldChange >  1 & data$pvalue < 0.02, "red",
++           ifelse(data$log2FoldChange < -1 & data$log2FoldChange < -1 
++                 & data$pvalue < 0.01, "blue", "black")))
+> #Add reference lines for threshold
+> abline(v=c(-1,1), col="blue", lty=2) #Log2FC thresholds
+> abline(h= -log10(0.01), col="red", lty=2) #p-value threshold
+> # Identify Upregulated Genes
+> #Genes are considered upregulated if they have Log2FC > 1 and pvalue < 0.01
+> upregulated <- data[data$log2FoldChange > 1 & data$pvalue < 0.01, ]
+> head(upregulated)
+        Gene log2FoldChange    pvalue     padj
+6    EMILIN2          1.534 2.976e-06 0.006809
+11    POU3F4          1.181 1.062e-05 0.015840
+15 LOC285954          1.050 1.456e-05 0.015920
+16     VEPH1          1.137 2.211e-05 0.022670
+21     DTHD1          1.540 5.594e-05 0.043710
+30      PI16          1.495 1.297e-04 0.077940
+> nrow(upregulated)
+[1] 19
+> #Identify Downregulated Genes
+> #Genes are considered downregulated if they have Log2FC < -1 and pvalue<0.01
+> downregulated <- data[data$log2FoldChange < -1 & data$pvalue<0.01,]
+> head(downregulated)
+      Gene log2FoldChange    pvalue      padj
+2     TBX5         -2.129 5.655e-08 0.0004191
+4   IFITM1         -1.687 3.735e-06 0.0068090
+8    LAMA2         -1.425 2.390e-06 0.0068090
+9     CAV2         -1.052 3.213e-06 0.0068090
+10     TNN         -1.658 8.973e-06 0.0147200
+12 COL13A1         -1.647 1.394e-05 0.0159200
+> nrow(downregulated)
+[1] 91
+> #Identify normal regulated Genes
+> #Genes are considered normal if they have Log2FC between -1 and 1 or pvalue >=0.01)
+> normal <- data[(data$log2FoldChange >= -1 & 
++                   data$log2FoldChange <=1) | data$pvalue >= 0.01,]
+> head(normal)
+      Gene log2FoldChange    pvalue      padj
+1     DOK6         0.5100 1.861e-08 0.0003053
+3  SLC32A1         0.9003 7.664e-08 0.0004191
+5    NUP93         0.3659 3.373e-06 0.0068090
+7     TPX2        -0.9974 2.097e-06 0.0068090
+22   RBMS1        -0.9139 6.688e-05 0.0498800
+32 SLC12A8        -0.9425 1.589e-04 0.0814600
+> nrow(normal)
+[1] 16296
